@@ -22,6 +22,11 @@ namespace FizzBuzz
             IList<string> classes = GetAllConcretNamesFizzBuzz<IFizzBuzz>();
             IList<IFizzBuzz> instances = GetConcretClasses<IFizzBuzz>(classes);
 
+            //GetConcretClassesII<IFizzBuzz>(classes);
+            //GetConcretClassesIII<IFizzBuzz>();
+            //GetConcretClassesIV();
+
+
             for (int i = 1; i <= 100; i++)
             {
                 foreach (var item in instances.OrderBy(x => x.Order))
@@ -70,5 +75,73 @@ namespace FizzBuzz
             }
             return instances;
         }
+
+        static IList<T> GetConcretClassesII<T>(IList<string> classes)
+        {
+            List<T> instances = new List<T>();
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+
+            Type typeClass = null;
+
+            foreach (var item in classes)
+            {
+                typeClass = assembly.GetType(item);
+                T instance = (T)Activator.CreateInstance(typeClass);
+                instances.Add(instance);
+            }
+            return instances;
+        }
+
+        static IList<T> GetConcretClassesIII<T>()
+        {
+            List<T> instances = new List<T>();
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+
+            var t = typeof(T);
+            var types = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => t.IsAssignableFrom(p) && !p.IsInterface);
+
+            foreach (Type type in types)
+            {
+                T example = (T)assembly.CreateInstance(type.FullName);
+                if (example != null)
+                {
+                    instances.Add(example);
+                }
+            }
+
+            return instances;
+        }
+
+        static IList<IFizzBuzz> GetConcretClassesIV()
+        {
+            List<IFizzBuzz> instances = new List<IFizzBuzz>();
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+
+
+            Type[] types = assembly.GetTypes();
+            foreach (Type type in types)
+            {
+                // Does this class support the transport interface?
+                Type typeExample = type.GetInterface("IFizzBuzz");
+                if (typeExample == null)
+                {
+                    // Not supported.
+                    continue;
+                }
+
+                // This class supports the interface. Instantiate it.
+                IFizzBuzz example = assembly.CreateInstance(type.FullName) as IFizzBuzz;
+                if (example != null)
+                {
+                    // Successfully created the interface. We are done.
+                    instances.Add(example);
+                }
+            }
+
+            return instances;
+        }
+
     }
 }

@@ -21,26 +21,27 @@ namespace FizzBuzz
         {
             IList<string> classes = GetAllConcretNamesFizzBuzz<IFizzBuzz>();
             IList<IFizzBuzz> instances = GetConcretClasses<IFizzBuzz>(classes);
-            IWriter w = new WriteOnConsole();
 
             for (int i = 1; i <= 100; i++)
             {
                 foreach (var item in instances.OrderBy(x => x.Order))
                 {
-                    if (DoTheJob(w, item, i))
+                    if (DoTheJob(item, i))
                         break;
                 }
             }
             Console.ReadLine();
         }
 
-        static bool DoTheJob(IWriter w, IFizzBuzz obj, int i)
+        static bool DoTheJob(IFizzBuzz obj, int i)
         {
+            IWriter w = null;
             string description = string.Empty;
-            if (obj.Validar(i))
+            obj.Number = i;
+            if (obj.Check())
             {
-                description = obj.Descricao(i);
-                w.Write(description);
+                w = new WriteOnConsole(obj);
+                w.Write();
                 return true;
             }
             return false;

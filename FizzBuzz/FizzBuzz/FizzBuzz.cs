@@ -6,20 +6,23 @@ using System.Threading.Tasks;
 
 namespace FizzBuzz
 {
-    public class FizzBuzz:IFizzBuzz
+    public class FizzBuzz : IFizzBuzz
     {
         public int Order
         {
             get { return 1; }
         }
-        public string Descricao(int i)
+
+        public int? Number { get; set; }
+
+        public string Description()
         {
             return "FizzBuzz";
         }
 
-        public bool Validar(int i)
+        public bool Check()
         {
-            return i % 3 == 0 && i % 5 == 0;
+            return Number % 3 == 0 && Number % 5 == 0;
         }
     }
 }

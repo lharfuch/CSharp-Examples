@@ -6,20 +6,21 @@ using System.Threading.Tasks;
 
 namespace FizzBuzz
 {
-    public class Padrao : IFizzBuzz
+    public class Standard : IFizzBuzz
     {
         public int Order
         {
             get { return 99; }
         }
-        public string Descricao(int i)
+        public int? Number { get; set; }
+        public string Description()
         {
-            return i.ToString();
+            return Number.ToString();
         }
 
-        public bool Validar(int i)
+        public bool Check()
         {
-            return !(i % 3 == 0 && i % 5 == 0);
+            return !(Number % 3 == 0 && Number % 5 == 0);
         }
     }
 }

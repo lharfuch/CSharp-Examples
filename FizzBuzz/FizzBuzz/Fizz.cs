@@ -12,14 +12,15 @@ namespace FizzBuzz
         {
             get { return 2; }
         }
-        public string Descricao(int i)
+        public int? Number { get; set; }
+        public string Description()
         {
             return "Fizz";
         }
 
-        public bool Validar(int i)
+        public bool Check()
         {
-            return i % 3 == 0;
+            return Number % 3 == 0;
         }
     }
 }

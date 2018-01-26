@@ -8,8 +8,9 @@ namespace FizzBuzz
 {
     public interface IFizzBuzz
     {
-        bool Validar(int i);
-        string Descricao(int i);
+        bool Check();
+        string Description();
         int Order { get;}
+        int? Number { get; set; }
     }
 }

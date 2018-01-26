@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 
 namespace FizzBuzz
 {
-    class WriteOnConsole : IWriter
+    public class WriteOnConsole : IWriter
     {
-        public void Write(string text)
+        IFizzBuzz _obj = null;
+        public WriteOnConsole(IFizzBuzz obj)
         {
-            Console.WriteLine(text);
+            _obj = obj;
+        }
+
+        public void Write()
+        {
+            Console.WriteLine(_obj.Description());
         }
     }
 }

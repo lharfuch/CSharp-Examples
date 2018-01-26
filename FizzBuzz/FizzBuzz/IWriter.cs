@@ -8,6 +8,6 @@ namespace FizzBuzz
 {
     public interface IWriter
     {
-        void Write(string text);
+        void Write();
     }
 }
